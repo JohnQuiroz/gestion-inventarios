@@ -24,7 +24,7 @@ const typeDefs = gql`
         userId: String
         materialId: Int
         incoming: Int
-        outcoming: Int
+        outcomming: Int
     }
 
     type Query {
@@ -43,9 +43,9 @@ const typeDefs = gql`
         createMaterial(id: Int!, name: String!, balance: Int!, createdAt: String, userId: String!): Material
         deleteMaterial(id: Int!): Material
         updateMaterial(id: Int!, name: String!, balance: Int!, createdAt: String, userId: String!): Material
-        createMovement(id: String!, createdAt: String, userId: String!, materialId: Int!, incoming: Int, outcoming: Int): Movement
+        createMovement(id: String!, createdAt: String, userId: String!, materialId: Int!, incoming: Int, outcomming: Int): Movement
         deleteMovement(id: String!): Movement
-        updateMovement(id: String!, createdAt: String, userId: String!, materialId: Int!, incoming: Int, outcoming: Int): Movement
+        updateMovement(id: String!, createdAt: String, userId: String!, materialId: Int!, incoming: Int, outcomming: Int): Movement
     }
 `;
 

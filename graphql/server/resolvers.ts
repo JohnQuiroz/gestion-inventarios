@@ -129,7 +129,7 @@ const resolvers: Resolver = {
             return material;
         },
         createMovement: async (parent, args, context) => {
-            const { id, userId, materialId, createdAt, incoming, outcoming } = args;
+            const { id, userId, materialId, createdAt, incoming, outcomming } = args;
             const { db } = context;
             const newMovement = await db.movement.create({
                 data: {
@@ -138,7 +138,7 @@ const resolvers: Resolver = {
                     materialId,
                     createdAt,
                     incoming,
-                    outcoming
+                    outcomming
                 }
             });
             return newMovement;
@@ -154,7 +154,7 @@ const resolvers: Resolver = {
             return movement;
         },
         updateMovement: async (parent, args, context) => {
-            const { id, userId, materialId, createdAt, incoming, outcoming } = args;
+            const { id, userId, materialId, createdAt, incoming, outcomming } = args;
             const { db } = context;
             const movement = await db.movement.update({
                 where: {
@@ -165,7 +165,7 @@ const resolvers: Resolver = {
                     materialId,
                     createdAt,
                     incoming,
-                    outcoming
+                    outcomming
                 }
             });
             return movement;
