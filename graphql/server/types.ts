@@ -4,8 +4,8 @@ const typeDefs = gql`
     scalar DateTime
 
     enum Enum_RoleName {
-        Admin
-        User
+        ADMIN
+        USER
     }
 
     type User {
@@ -22,7 +22,7 @@ const typeDefs = gql`
 
     type Role {
         id: ID!
-        name: String
+        name: Enum_RoleName
         users: [User]
         createdAt: DateTime
         updatedAt: DateTime
