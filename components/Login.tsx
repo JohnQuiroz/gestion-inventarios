@@ -23,7 +23,7 @@ const Login = () => {
                 </span>
             </div>
             <div className="flex justify-center items-center">
-                <button type='button' onClick={() => signIn('auth0')} className="border border-solid border-slate-900 bg-slate-600 rounded-md p-2 text-base hover:bg-slate-300 text-zinc-50 hover:text-zinc-700">Iniciar sesión</button>
+                <button type='button' onClick={() => signIn()} className="border border-solid border-slate-900 bg-slate-600 rounded-md p-2 text-base hover:bg-slate-300 text-zinc-50 hover:text-zinc-700">Iniciar sesión</button>
             </div>
         </div>
     )
