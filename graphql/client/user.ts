@@ -7,9 +7,22 @@ const GET_USERS = gql`
         email
         id
         name
-        rol
+        role
     }
   }
 `;
 
-export { GET_USERS };
+const GET_USER = gql`
+  query User($email: String!) {
+    user(email: $email) {
+        name
+        email
+        id
+        role{
+          name
+        }
+    }
+  }
+`;
+
+export { GET_USERS, GET_USER };

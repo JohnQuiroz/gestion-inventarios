@@ -1,13 +1,31 @@
 import { gql } from "graphql-tag";
 
 const typeDefs = gql`
+    scalar DateTime
+
+    enum Enum_RoleName {
+        Admin
+        User
+    }
+
     type User {
         id: ID!
+        document: String
         name: String
         email: String
-        createdAt: String
-        rol: String
+        emailVerified: DateTime
         image: String
+        role: Role
+        createdAt: DateTime
+        updatedAt: DateTime
+    }
+
+    type Role {
+        id: ID!
+        name: String
+        users: [User]
+        createdAt: DateTime
+        updatedAt: DateTime
     }
 
     type Material {
@@ -23,13 +41,13 @@ const typeDefs = gql`
         createdAt: String
         userId: String
         materialId: Int
-        incoming: Int
-        outcomming: Int
+        entry: Int
+        out: Int
     }
 
     type Query {
         users: [User]
-        user(id: String!): User
+        user(email: String!): User
         materials: [Material]
         material(id: Int!): Material
         movements: [Movement]
@@ -37,15 +55,15 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        createUser(id: String!, name: String!, email: String!, createdAt: String, rol: String!, image: String): User
+        createUser(id: String!, name: String!, email: String!, createdAt: String, role: String!, image: String): User
         deleteUser(id: String!): User
-        updateUser(id: String!, name: String!, email: String!, createdAt: String, rol: String!, image: String): User
+        updateUser(id: String!, name: String!, email: String!, createdAt: String, role: String!, image: String): User
         createMaterial(id: Int!, name: String!, balance: Int!, createdAt: String, userId: String!): Material
         deleteMaterial(id: Int!): Material
         updateMaterial(id: Int!, name: String!, balance: Int!, createdAt: String, userId: String!): Material
-        createMovement(id: String!, createdAt: String, userId: String!, materialId: Int!, incoming: Int, outcomming: Int): Movement
+        createMovement(id: String!, createdAt: String, userId: String!, materialId: Int!, entry: Int, out: Int): Movement
         deleteMovement(id: String!): Movement
-        updateMovement(id: String!, createdAt: String, userId: String!, materialId: Int!, incoming: Int, outcomming: Int): Movement
+        updateMovement(id: String!, createdAt: String, userId: String!, materialId: Int!, entry: Int, out: Int): Movement
     }
 `;
 

@@ -10,34 +10,82 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 model User {
-  id        String     @id
-  name      String
-  email     String     @unique
-  createdAt DateTime   @default(now())
-  rol       String
-  image     String     @default("default.png")
-  materials Material[]
-  movements Movement[]
+  id            String     @id @default(cuid())
+  document      String?     @unique
+  name          String?
+  email         String?    @unique
+  emailVerified DateTime?
+  image         String     @default("default.png")
+  role          Role?      @relation(fields: [roleId], references: [id])
+  roleId        String?
+  accounts      Account[]
+  sessions      Session[]
+  materials     Material[]
+  movements     Movement[]
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @default(now())
+}
+
+enum Enum_RoleName {
+  ADMIN
+  USER
+}
+
+model Role {
+  id        String        @id @default(cuid())
+  name      Enum_RoleName
+  users     User[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @default(now())
 }
 
 model Material {
-  id        Int        @id @default(autoincrement())
+  id        String     @id @default(cuid())
   name      String
   balance   Int        @default(0)
-  createdAt DateTime   @default(now())
-  user      User       @relation(fields: [userId], references: [id])
+  createdBy User       @relation(fields: [userId], references: [id])
   userId    String
   movements Movement[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
 }
 
 model Movement {
-  id         String   @id
-  createdAt  DateTime @default(now())
-  user       User     @relation(fields: [userId], references: [id])
+  id         String   @id @default(cuid())
+  entry      Int      @default(0)
+  out        Int      @default(0)
+  createdBy  User     @relation(fields: [userId], references: [id])
   userId     String
   material   Material @relation(fields: [materialId], references: [id])
-  materialId Int
-  incoming   Int      @default(0)
-  outcomming Int      @default(0)
+  materialId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
 }
