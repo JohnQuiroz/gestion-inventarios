@@ -3,7 +3,7 @@ import { gql } from "graphql-tag";
 const typeDefs = gql`
     scalar DateTime
 
-    export enum Enum_RoleName {
+    enum Enum_RoleName {
         ADMIN
         USER
     }
