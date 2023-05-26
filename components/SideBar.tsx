@@ -35,7 +35,7 @@ const SideBar = () => (
       <button
         type='button'
         onClick={() => signOut({ callbackUrl: '/' })}
-        className='rounded-md border border-slate-900 bg-slate-600 p-2 text-base text-zinc-50 hover:bg-slate-300 hover:text-zinc-700'>
+        className='rounded-md border border-slate-900 hover:bg-slate-600 p-2 text-base hover:text-zinc-50 bg-slate-300 text-zinc-700'>
         Cerrar sesión
       </button>
     </div>
