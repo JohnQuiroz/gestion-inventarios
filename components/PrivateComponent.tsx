@@ -1,8 +1,5 @@
-import { GET_USER } from '@/graphql/client/user';
 import { useUserData } from '@/hooks/useUserData';
-import { useQuery } from '@apollo/client';
 import { Enum_RoleName } from '@prisma/client';
-import { useSession } from 'next-auth/react';
 import React from 'react'
 
 interface PrivateComponentProps {

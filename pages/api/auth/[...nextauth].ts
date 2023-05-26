@@ -15,8 +15,6 @@ const authOptions: NextAuthOptions = {
     ]
 }
 
-const auth = async (req: NextApiRequest, res: NextApiResponse) => {
-    return await NextAuth(req, res, authOptions);
-}
+const auth = async (req: NextApiRequest, res: NextApiResponse) => await NextAuth(req, res, authOptions);
 
 export default auth;
