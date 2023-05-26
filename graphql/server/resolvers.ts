@@ -47,7 +47,7 @@ const resolvers: Resolver = {
     },
     Mutation: {
         createUser: async (parent, args, context) => {
-            const { id, name, email, createdAt, rol, image } = args;
+            const { id, name, email, createdAt, role, image } = args;
             const { db } = context;
             const newUser = await db.user.create({
                 data: {
@@ -55,7 +55,7 @@ const resolvers: Resolver = {
                     name,
                     email,
                     createdAt,
-                    rol,
+                    role,
                     image
                 }
             });
@@ -72,7 +72,7 @@ const resolvers: Resolver = {
             return user;
         },
         updateUser: async (parent, args, context) => {
-            const { id, name, email, createdAt, rol, image } = args;
+            const { id, name, email, createdAt, role, image } = args;
             const { db } = context;
             const user = await db.user.update({
                 where: {
@@ -82,7 +82,7 @@ const resolvers: Resolver = {
                     name,
                     email,
                     createdAt,
-                    rol,
+                    role,
                     image
                 }
             });
@@ -129,7 +129,7 @@ const resolvers: Resolver = {
             return material;
         },
         createMovement: async (parent, args, context) => {
-            const { id, userId, materialId, createdAt, incoming, outcomming } = args;
+            const { id, userId, materialId, createdAt, entry, out } = args;
             const { db } = context;
             const newMovement = await db.movement.create({
                 data: {
@@ -137,8 +137,8 @@ const resolvers: Resolver = {
                     userId,
                     materialId,
                     createdAt,
-                    incoming,
-                    outcomming
+                    entry,
+                    out
                 }
             });
             return newMovement;
@@ -154,7 +154,7 @@ const resolvers: Resolver = {
             return movement;
         },
         updateMovement: async (parent, args, context) => {
-            const { id, userId, materialId, createdAt, incoming, outcomming } = args;
+            const { id, userId, materialId, createdAt, entry, out } = args;
             const { db } = context;
             const movement = await db.movement.update({
                 where: {
@@ -164,8 +164,8 @@ const resolvers: Resolver = {
                     userId,
                     materialId,
                     createdAt,
-                    incoming,
-                    outcomming
+                    entry,
+                    out
                 }
             });
             return movement;
