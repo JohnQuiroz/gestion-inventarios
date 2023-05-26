@@ -1,6 +1,17 @@
 import { Resolver } from "types";
 
 const resolvers: Resolver = {
+    User: {
+        role: async (parent, args, context) => {
+            const { db } = context;
+            const role = await db.role.findUnique({
+                where: {
+                    id: parent.roleId
+                }
+            });
+            return role;
+        }
+    },
     Query: {
         users: async (parent, args, context) => {
             const { db } = context;
@@ -11,7 +22,7 @@ const resolvers: Resolver = {
             const { db } = context;
             const user = await db.user.findUnique({
                 where: {
-                    id: args.id
+                    email: args.email
                 }
             });
             return user;
@@ -46,21 +57,6 @@ const resolvers: Resolver = {
         }
     },
     Mutation: {
-        createUser: async (parent, args, context) => {
-            const { id, name, email, createdAt, role, image } = args;
-            const { db } = context;
-            const newUser = await db.user.create({
-                data: {
-                    id,
-                    name,
-                    email,
-                    createdAt,
-                    role,
-                    image
-                }
-            });
-            return newUser;
-        },
         deleteUser: async (parent, args, context) => {
             const { id } = args;
             const { db } = context;

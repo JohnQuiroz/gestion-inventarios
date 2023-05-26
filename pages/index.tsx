@@ -10,8 +10,6 @@ export default function Home() {
   return (
     <main className='flex flex-row h-screen'>
       <Login />
-      {/* <SideBar />
-      <Users /> */}
     </main>
   )
 }

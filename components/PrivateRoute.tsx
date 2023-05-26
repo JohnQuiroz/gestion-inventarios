@@ -1,3 +1,4 @@
+import { useUserData } from '@/hooks/useUserData';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React from 'react'
@@ -8,7 +9,7 @@ interface PrivateRouteProps {
 
 const PrivateRoute = ({ children }: PrivateRouteProps) => {
     const router = useRouter();
-    const { data: session, status } = useSession();
+    const { status, session } = useUserData();
 
     if (status === "loading") return <p>Cargando...</p>;
 

@@ -19,7 +19,7 @@ const Login = () => {
             </div>
             <div className="flex flex-col justify-center w-full gap-y-5 items-center">
                 <span className="flex flex-row justify-center w-full">
-                    Sistema para la gestión de inventarios de la empresa de servicios públicos de Acacias E.S.P.
+                    Por favor inicie sesión para continuar.
                 </span>
             </div>
             <div className="flex justify-center items-center">
