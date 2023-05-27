@@ -29,87 +29,93 @@ const resolvers: Resolver = {
         },
         materials: async (parent, args, context) => {
             const { db } = context;
-            const users = await db.material.findMany();
-            return users;
+            const materials = await db.material.findMany();
+            return materials;
         },
-        material: async (parent, args, context) => {
+        materialNames: async (parent, args, context) => {
             const { db } = context;
-            const user = await db.material.findUnique({
+            const materials = await db.material.findMany({
                 where: {
                     id: args.id
                 }
             });
-            return user;
+            return materials;
         },
         movements: async (parent, args, context) => {
             const { db } = context;
-            const users = await db.movement.findMany();
-            return users;
-        },
-        movement: async (parent, args, context) => {
-            const { db } = context;
-            const user = await db.user.findUnique({
+            const materials = await db.movement.findMany({
                 where: {
-                    id: args.id
+                    id: args.materialId
                 }
             });
-            return user;
+            return materials;
         }
     },
     Mutation: {
         updateUser: async (parent, args, context) => {
-            const { id, updatedAt, role } = args;
+            const { id, role } = args;
             const { db } = context;
             const user = await db.user.update({
                 where: {
                     id: id
                 },
                 data: {
-                    updatedAt,
-                    role
+                    updatedAt: new Date(),
+                    role: {
+                        connect: {
+                            id: role
+                        }
+                    }
                 }
             });
             return user;
         },
         createMaterial: async (parent, args, context) => {
-            const { id, name, balance, createdAt, userId } = args;
+            const { name, userId } = args;
             const { db } = context;
             const newMaterial = await db.material.create({
                 data: {
-                    id,
                     name,
-                    balance,
-                    createdAt,
-                    userId
+                    createdBy: {
+                        connect: {
+                            id: userId
+                        }
+                    }
                 }
             });
             return newMaterial;
         },
         updateMaterial: async (parent, args, context) => {
-            const { id, balance, updatedAt } = args;
+            const { id, balance } = args;
             const { db } = context;
             const material = await db.material.update({
                 where: {
                     id: id
                 },
                 data: {
-                    balance,
-                    updatedAt
+                    balance: balance,
+                    updatedAt: new Date()
                 }
             });
             return material;
         },
         createMovement: async (parent, args, context) => {
-            const { id, userId, materialId, createdAt, entry, out } = args;
+            const { userId, materialId, entry, out } = args;
             const { db } = context;
             const newMovement = await db.movement.create({
                 data: {
-                    id,
-                    userId,
-                    materialId,
-                    createdAt,
-                    entry,
-                    out
+                    createdBy: {
+                        connect: {
+                            id: userId
+                        }
+                    },
+                    material: {
+                        connect: {
+                            id: materialId
+                        }
+                    },
+                    entry: entry,
+                    out: out
                 }
             });
             return newMovement;
