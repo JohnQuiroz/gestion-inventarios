@@ -14,34 +14,12 @@ const resolvers: Resolver = {
     },
     Query: {
         users: async (parent, args, context) => {
-            const { db, session } = context;
-            const userRole = await db.user.findUnique({
-                where: {
-                    email: session?.user?.email ?? ''
-                },
-                include: {
-                    role: true
-                }
-            });
-            if (userRole?.role?.name !== 'ADMIN') {
-                return null;
-            }
+            const { db } = context;
             const users = await db.user.findMany();
             return users;
         },
         user: async (parent, args, context) => {
-            const { db, session } = context;
-            const userRole = await db.user.findUnique({
-                where: {
-                    email: session?.user?.email ?? ''
-                },
-                include: {
-                    role: true
-                }
-            });
-            if (userRole?.role?.name !== 'ADMIN') {
-                return null;
-            }
+            const { db } = context;
             const user = await db.user.findUnique({
                 where: {
                     email: args.email
@@ -81,18 +59,7 @@ const resolvers: Resolver = {
     Mutation: {
         updateUser: async (parent, args, context) => {
             const { id, updatedAt, role } = args;
-            const { db, session } = context;
-            const userRole = await db.user.findUnique({
-                where: {
-                    email: session?.user?.email ?? ''
-                },
-                include: {
-                    role: true
-                }
-            });
-            if (userRole?.role?.name !== 'ADMIN') {
-                return null;
-            }
+            const { db } = context;
             const user = await db.user.update({
                 where: {
                     id: id
@@ -106,18 +73,7 @@ const resolvers: Resolver = {
         },
         createMaterial: async (parent, args, context) => {
             const { id, name, balance, createdAt, userId } = args;
-            const { db, session } = context;
-            const userRole = await db.user.findUnique({
-                where: {
-                    email: session?.user?.email ?? ''
-                },
-                include: {
-                    role: true
-                }
-            });
-            if (userRole?.role?.name !== 'ADMIN') {
-                return null;
-            }
+            const { db } = context;
             const newMaterial = await db.material.create({
                 data: {
                     id,
