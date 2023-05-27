@@ -14,12 +14,34 @@ const resolvers: Resolver = {
     },
     Query: {
         users: async (parent, args, context) => {
-            const { db } = context;
+            const { db, session } = context;
+            const userRole = await db.user.findUnique({
+                where: {
+                    email: session?.user?.email ?? ''
+                },
+                include: {
+                    role: true
+                }
+            });
+            if (userRole?.role?.name !== 'ADMIN') {
+                return null;
+            }
             const users = await db.user.findMany();
             return users;
         },
         user: async (parent, args, context) => {
-            const { db } = context;
+            const { db, session } = context;
+            const userRole = await db.user.findUnique({
+                where: {
+                    email: session?.user?.email ?? ''
+                },
+                include: {
+                    role: true
+                }
+            });
+            if (userRole?.role?.name !== 'ADMIN') {
+                return null;
+            }
             const user = await db.user.findUnique({
                 where: {
                     email: args.email
@@ -57,36 +79,45 @@ const resolvers: Resolver = {
         }
     },
     Mutation: {
-        deleteUser: async (parent, args, context) => {
-            const { id } = args;
-            const { db } = context;
-            const user = await db.user.delete({
+        updateUser: async (parent, args, context) => {
+            const { id, updatedAt, role } = args;
+            const { db, session } = context;
+            const userRole = await db.user.findUnique({
                 where: {
-                    id: id
+                    email: session?.user?.email ?? ''
+                },
+                include: {
+                    role: true
                 }
             });
-            return user;
-        },
-        updateUser: async (parent, args, context) => {
-            const { id, name, email, createdAt, role, image } = args;
-            const { db } = context;
+            if (userRole?.role?.name !== 'ADMIN') {
+                return null;
+            }
             const user = await db.user.update({
                 where: {
                     id: id
                 },
                 data: {
-                    name,
-                    email,
-                    createdAt,
-                    role,
-                    image
+                    updatedAt,
+                    role
                 }
             });
             return user;
         },
         createMaterial: async (parent, args, context) => {
             const { id, name, balance, createdAt, userId } = args;
-            const { db } = context;
+            const { db, session } = context;
+            const userRole = await db.user.findUnique({
+                where: {
+                    email: session?.user?.email ?? ''
+                },
+                include: {
+                    role: true
+                }
+            });
+            if (userRole?.role?.name !== 'ADMIN') {
+                return null;
+            }
             const newMaterial = await db.material.create({
                 data: {
                     id,
@@ -98,28 +129,16 @@ const resolvers: Resolver = {
             });
             return newMaterial;
         },
-        deleteMaterial: async (parent, args, context) => {
-            const { id } = args;
-            const { db } = context;
-            const material = await db.material.delete({
-                where: {
-                    id: id
-                }
-            });
-            return material;
-        },
         updateMaterial: async (parent, args, context) => {
-            const { id, name, balance, createdAt, userId } = args;
+            const { id, balance, updatedAt } = args;
             const { db } = context;
             const material = await db.material.update({
                 where: {
                     id: id
                 },
                 data: {
-                    name,
                     balance,
-                    createdAt,
-                    userId
+                    updatedAt
                 }
             });
             return material;
@@ -138,33 +157,6 @@ const resolvers: Resolver = {
                 }
             });
             return newMovement;
-        },
-        deleteMovement: async (parent, args, context) => {
-            const { id } = args;
-            const { db } = context;
-            const movement = await db.movement.delete({
-                where: {
-                    id: id
-                }
-            });
-            return movement;
-        },
-        updateMovement: async (parent, args, context) => {
-            const { id, userId, materialId, createdAt, entry, out } = args;
-            const { db } = context;
-            const movement = await db.movement.update({
-                where: {
-                    id: id
-                },
-                data: {
-                    userId,
-                    materialId,
-                    createdAt,
-                    entry,
-                    out
-                }
-            });
-            return movement;
         }
     }
 };
