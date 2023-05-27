@@ -57,29 +57,16 @@ const resolvers: Resolver = {
         }
     },
     Mutation: {
-        deleteUser: async (parent, args, context) => {
-            const { id } = args;
-            const { db } = context;
-            const user = await db.user.delete({
-                where: {
-                    id: id
-                }
-            });
-            return user;
-        },
         updateUser: async (parent, args, context) => {
-            const { id, name, email, createdAt, role, image } = args;
+            const { id, updatedAt, role } = args;
             const { db } = context;
             const user = await db.user.update({
                 where: {
                     id: id
                 },
                 data: {
-                    name,
-                    email,
-                    createdAt,
-                    role,
-                    image
+                    updatedAt,
+                    role
                 }
             });
             return user;
@@ -98,28 +85,16 @@ const resolvers: Resolver = {
             });
             return newMaterial;
         },
-        deleteMaterial: async (parent, args, context) => {
-            const { id } = args;
-            const { db } = context;
-            const material = await db.material.delete({
-                where: {
-                    id: id
-                }
-            });
-            return material;
-        },
         updateMaterial: async (parent, args, context) => {
-            const { id, name, balance, createdAt, userId } = args;
+            const { id, balance, updatedAt } = args;
             const { db } = context;
             const material = await db.material.update({
                 where: {
                     id: id
                 },
                 data: {
-                    name,
                     balance,
-                    createdAt,
-                    userId
+                    updatedAt
                 }
             });
             return material;
@@ -138,33 +113,6 @@ const resolvers: Resolver = {
                 }
             });
             return newMovement;
-        },
-        deleteMovement: async (parent, args, context) => {
-            const { id } = args;
-            const { db } = context;
-            const movement = await db.movement.delete({
-                where: {
-                    id: id
-                }
-            });
-            return movement;
-        },
-        updateMovement: async (parent, args, context) => {
-            const { id, userId, materialId, createdAt, entry, out } = args;
-            const { db } = context;
-            const movement = await db.movement.update({
-                where: {
-                    id: id
-                },
-                data: {
-                    userId,
-                    materialId,
-                    createdAt,
-                    entry,
-                    out
-                }
-            });
-            return movement;
         }
     }
 };

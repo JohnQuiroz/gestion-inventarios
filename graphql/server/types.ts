@@ -32,38 +32,36 @@ const typeDefs = gql`
         id: ID!
         name: String
         balance: Int
-        createdAt: String
-        userId: String
+        user: User
+        movements: [Movement]
+        createdAt: DateTime
+        updatedAt: DateTime
     }
 
     type Movement{
         id: ID!
-        createdAt: String
-        userId: String
-        materialId: Int
         entry: Int
         out: Int
+        user: User
+        material: Material
+        createdAt: DateTime
+        updatedAt: DateTime
     }
 
     type Query {
         users: [User]
         user(email: String!): User
         materials: [Material]
-        material(id: Int!): Material
+        material(id: String!): Material
         movements: [Movement]
         movement(id: String!): Movement
     }
 
     type Mutation {
-        createUser(id: String!, name: String!, email: String!, createdAt: String, role: String!, image: String): User
-        deleteUser(id: String!): User
-        updateUser(id: String!, name: String!, email: String!, createdAt: String, role: String!, image: String): User
-        createMaterial(id: Int!, name: String!, balance: Int!, createdAt: String, userId: String!): Material
-        deleteMaterial(id: Int!): Material
-        updateMaterial(id: Int!, name: String!, balance: Int!, createdAt: String, userId: String!): Material
-        createMovement(id: String!, createdAt: String, userId: String!, materialId: Int!, entry: Int, out: Int): Movement
-        deleteMovement(id: String!): Movement
-        updateMovement(id: String!, createdAt: String, userId: String!, materialId: Int!, entry: Int, out: Int): Movement
+        updateUser(id: String!, updatedAt: String, role: String!): User
+        createMaterial(id: String, name: String!, balance: Int, createdAt: String, userId: String!): Material
+        updateMaterial(id: String!, name: String!, balance: Int!, createdAt: String, userId: String!): Material
+        createMovement(id: String, createdAt: String, userId: String!, materialId: Int!, entry: Int, out: Int): Movement
     }
 `;
 
