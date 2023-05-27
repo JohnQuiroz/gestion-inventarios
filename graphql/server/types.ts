@@ -55,9 +55,7 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        createUser(id: String!, name: String!, email: String!, createdAt: String, role: String!, image: String): User
-        deleteUser(id: String!): User
-        updateUser(id: String!, name: String!, email: String!, createdAt: String, role: String!, image: String): User
+        updateUser(id: String!, name: String!, email: String!, updatedAt: String, role: String!, image: String): User
         createMaterial(id: Int!, name: String!, balance: Int!, createdAt: String, userId: String!): Material
         deleteMaterial(id: Int!): Material
         updateMaterial(id: Int!, name: String!, balance: Int!, createdAt: String, userId: String!): Material
