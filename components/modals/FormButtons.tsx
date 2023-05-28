@@ -26,4 +26,4 @@ const FormButtons = ({ loading, setOpenModal }: FormButtonsProps) => (
   </div>
 );
 
-export default FormButtons;
+export { FormButtons };

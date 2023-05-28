@@ -1,13 +1,13 @@
 import { GET_MATERIALS } from '@/graphql/client/material';
 import { useQuery } from '@apollo/client';
-import React, { useState } from 'react';
-import { Material, Movement } from 'prisma/prisma-client';
+import React from 'react';
+import { Material } from 'prisma/prisma-client';
 import { useModalContext } from '@/context/modalContext';
 import PrivateComponent from './PrivateComponent';
 import ModalMaterials from './modals/ModalMaterials';
 
 const Materials = () => {
-  const { openModalMaterials, setOpenModalMaterials } = useModalContext();
+  const { setOpenModalMaterials } = useModalContext();
   const { data: dataMaterials, loading: loadingMaterials } = useQuery<{
     materials: Material[];
   }>(GET_MATERIALS);

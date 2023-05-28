@@ -10,13 +10,21 @@ import { useModalContext } from '@/context/modalContext';
 import ModalMovements from './modals/ModalMovements';
 
 const Movements = () => {
-  const [materialFilter, setMaterialFilter] = useState<{ materialId: String }>({ materialId: '' });
+  const [materialFilter, setMaterialFilter] = useState<{ materialId: String }>({
+    materialId: '',
+  });
   const [enableButton, setEnableButton] = useState<boolean>(false);
-  const { data: dataMaterials, loading: loadingMaterials } = useQuery<{ materialNames: Material[] }>(GET_MATERIAL_NAMES);
-  const { data: dataMovements, loading: loadingMovements } = useQuery<{ movements: Movement[] }>(GET_MOVEMENTS, {
+  const { data: dataMaterials, loading: loadingMaterials } = useQuery<{
+    materialNames: Material[];
+  }>(GET_MATERIAL_NAMES);
+  const { data: dataMovements, loading: loadingMovements } = useQuery<{
+    movements: Movement[];
+  }>(GET_MOVEMENTS, {
     variables: { materialId: materialFilter.materialId },
   });
-  const { data: balance, loading: loadingBalance } = useQuery<{ materialBalance: Material }>(GET_MATERIAL_BALANCE, {
+  const { data: balance } = useQuery<{
+    materialBalance: Material;
+  }>(GET_MATERIAL_BALANCE, {
     variables: { id: materialFilter.materialId },
   });
   const { setOpenModalMovements, setMaterialId } = useModalContext();
@@ -40,7 +48,8 @@ const Movements = () => {
             <select
               value={materialFilter.materialId.toString()}
               onChange={(e) => selectedMaterial(e)}
-              className='rounded-md border border-solid border-slate-900 bg-slate-300 p-2 text-base text-zinc-700'>
+              className='rounded-md border border-solid border-slate-900 bg-slate-300 p-2 text-base text-zinc-700'
+            >
               <option value='' disabled>
                 Selecciona un material
               </option>
@@ -54,7 +63,8 @@ const Movements = () => {
           <button
             onClick={() => setOpenModalMovements(true)}
             hidden={!enableButton}
-            className='rounded-md border border-solid border-slate-900 bg-slate-600 p-2 text-base text-zinc-50 hover:bg-slate-300 hover:text-zinc-700'>
+            className='rounded-md border border-solid border-slate-900 bg-slate-600 p-2 text-base text-zinc-50 hover:bg-slate-300 hover:text-zinc-700'
+          >
             Agregar movimiento
           </button>
         </div>
@@ -65,8 +75,12 @@ const Movements = () => {
             <table className='w-full border border-gray-700'>
               <thead>
                 <tr className='bg-gray-500 text-left text-zinc-50'>
-                  <th className='border-r border-gray-700 p-1'>Identificador</th>
-                  <th className='border-r border-gray-700 p-1'>Fecha de creación</th>
+                  <th className='border-r border-gray-700 p-1'>
+                    Identificador
+                  </th>
+                  <th className='border-r border-gray-700 p-1'>
+                    Fecha de creación
+                  </th>
                   <th className='border-r border-gray-700 p-1'>Entrada</th>
                   <th className='border-r border-gray-700 p-1'>Salida</th>
                 </tr>
@@ -74,10 +88,18 @@ const Movements = () => {
               <tbody>
                 {dataMovements?.movements.map((movement: any) => (
                   <tr key={movement.id} className='even:bg-gray-200'>
-                    <td className='border-r border-gray-700 p-1'>{movement.id}</td>
-                    <td className='border-r border-gray-700 p-1'>{movement.createdAt}</td>
-                    <td className='border-r border-gray-700 p-1'>{movement.entry}</td>
-                    <td className='border-r border-gray-700 p-1'>{movement.out}</td>
+                    <td className='border-r border-gray-700 p-1'>
+                      {movement.id}
+                    </td>
+                    <td className='border-r border-gray-700 p-1'>
+                      {movement.createdAt}
+                    </td>
+                    <td className='border-r border-gray-700 p-1'>
+                      {movement.entry}
+                    </td>
+                    <td className='border-r border-gray-700 p-1'>
+                      {movement.out}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -88,7 +110,10 @@ const Movements = () => {
       <div className='flex flex-row justify-end gap-x-2'>
         <span className='text-sm'>Total: </span>
         <span className='text-sm'>
-          {balance?.materialBalance === null || balance?.materialBalance === undefined ? 0 : balance?.materialBalance.balance.toString()}
+          {balance?.materialBalance === null ||
+          balance?.materialBalance === undefined
+            ? 0
+            : balance?.materialBalance.balance.toString()}
         </span>
       </div>
       <ModalMovements />

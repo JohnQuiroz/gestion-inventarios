@@ -11,7 +11,6 @@ const Inventory = () => {
       </div>
       <div className='flex h-full w-full flex-col justify-center gap-y-5 align-middle'>
         <div className='flex flex-row justify-between'>
-          {/* TODO Un select con los nombres de los materiales */}
           {loadingMaterials ? (
             <p>Cargando la lista de materiales...</p>
           ) : (
@@ -27,43 +26,6 @@ const Inventory = () => {
             Agregar movimiento
           </button>
         </div>
-        {/* TODO Una tabla con los movimientos de inventario */}
-        {/* <div className='flex items-center justify-center'>
-          {loading ? (
-            <p>Cargando...</p>
-          ) : (
-            <table className='w-full border border-gray-700'>
-              <thead>
-                <tr className='bg-gray-500 text-left text-zinc-50'>
-                  <th className='border-r border-gray-700 p-1'>Cédula</th>
-                  <th className='border-r border-gray-700 p-1'>Nombre</th>
-                  <th className='border-r border-gray-700 p-1'>
-                    Fecha de creación
-                  </th>
-                  <th className='border-r border-gray-700 p-1'>Correo</th>
-                  <th className='p-1'>Rol</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.users.map((user: any) => (
-                  <tr key={user.id} className='even:bg-gray-200'>
-                    <td className='border-r border-gray-700 p-1'>{user.id}</td>
-                    <td className='border-r border-gray-700 p-1'>
-                      {user.name}
-                    </td>
-                    <td className='border-r border-gray-700 p-1'>
-                      {user.createdAt}
-                    </td>
-                    <td className='border-r border-gray-700 p-1'>
-                      {user.email}
-                    </td>
-                    <td className='p-1'>{user.rol}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div> */}
       </div>
     </div>
   );
