@@ -16,18 +16,23 @@ const GET_MATERIAL_NAMES = gql`
     materialNames {
       id
       name
+    }
+  }
+`;
+
+const GET_MATERIAL_BALANCE = gql`
+  query MaterialBalance($id: String!) {
+    materialBalance(id: $id) {
       balance
     }
   }
 `;
 
 const CREATE_MATERIAL = gql`
-  mutation CreateMaterial($name: String!, $userId: String!) {
-    createMaterial(name: $name, userId: $userId) {
+  mutation CreateMaterial($name: String!) {
+    createMaterial(name: $name) {
       id
       name
-      createdAt
-      balance
     }
   }
 `;
@@ -44,4 +49,4 @@ const UPDATE_MATERIAL = gql`
   }
 `;
 
-export { GET_MATERIALS, GET_MATERIAL_NAMES, CREATE_MATERIAL, UPDATE_MATERIAL };
+export { GET_MATERIALS, GET_MATERIAL_NAMES, GET_MATERIAL_BALANCE, CREATE_MATERIAL, UPDATE_MATERIAL };

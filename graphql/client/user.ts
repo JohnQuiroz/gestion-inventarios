@@ -7,7 +7,10 @@ const GET_USERS = gql`
       email
       id
       name
-      role
+      role {
+        id
+        name
+      }
     }
   }
 `;
@@ -26,14 +29,14 @@ const GET_USER = gql`
 `;
 
 const UPDATE_USER = gql`
-  mutation UpdateUser($updateUserId: String!, $role: String!) {
-    updateUser(id: $updateUserId, role: $role) {
+  mutation UpdateUser($id: String!, $role: String!) {
+    updateUser(id: $id, role: $role) {
       id
       name
-      updatedAt
       role {
         name
       }
+      updatedAt
     }
   }
 `;

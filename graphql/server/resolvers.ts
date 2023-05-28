@@ -27,6 +27,11 @@ const resolvers: Resolver = {
             });
             return user;
         },
+        roles: async (parent, args, context) => {
+            const { db } = context;
+            const roles = await db.role.findMany();
+            return roles;
+        },
         materials: async (parent, args, context) => {
             const { db } = context;
             const materials = await db.material.findMany();
@@ -41,14 +46,23 @@ const resolvers: Resolver = {
             });
             return materials;
         },
-        movements: async (parent, args, context) => {
+        materialBalance: async (parent, args, context) => {
             const { db } = context;
-            const materials = await db.movement.findMany({
+            const material = await db.material.findUnique({
                 where: {
-                    id: args.materialId
+                    id: args.id
                 }
             });
-            return materials;
+            return material;
+        },
+        movements: async (parent, args, context) => {
+            const { db } = context;
+            const movements = await db.movement.findMany({
+                where: {
+                    materialId: args.materialId
+                }
+            });
+            return movements;
         }
     },
     Mutation: {
@@ -71,14 +85,14 @@ const resolvers: Resolver = {
             return user;
         },
         createMaterial: async (parent, args, context) => {
-            const { name, userId } = args;
-            const { db } = context;
+            const { name } = args;
+            const { db, session } = context;
             const newMaterial = await db.material.create({
                 data: {
-                    name,
+                    name: name,
                     createdBy: {
                         connect: {
-                            id: userId
+                            email: session?.user?.email ?? ''
                         }
                     }
                 }
@@ -100,13 +114,24 @@ const resolvers: Resolver = {
             return material;
         },
         createMovement: async (parent, args, context) => {
-            const { userId, materialId, entry, out } = args;
-            const { db } = context;
+            const { materialId, entry, out } = args;
+            const { db, session } = context;
+            let balance = 0;
+            const material = await db.material.findUnique({
+                where: {
+                    id: materialId
+                }
+            });
+            if ((material?.balance === undefined || material?.balance === null || material?.balance === 0 || material?.balance < out) && (out > 0)) {
+                throw new Error('No hay suficiente material para realizar el movimiento');
+            } else {
+                balance = material?.balance + entry - out;
+            }
             const newMovement = await db.movement.create({
                 data: {
                     createdBy: {
                         connect: {
-                            id: userId
+                            email: session?.user?.email ?? ''
                         }
                     },
                     material: {
@@ -116,6 +141,15 @@ const resolvers: Resolver = {
                     },
                     entry: entry,
                     out: out
+                }
+            });
+            await db.material.update({
+                where: {
+                    id: materialId
+                },
+                data: {
+                    balance: balance,
+                    updatedAt: new Date()
                 }
             });
             return newMovement;
