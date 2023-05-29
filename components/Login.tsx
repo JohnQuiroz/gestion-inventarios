@@ -26,8 +26,7 @@ const Login = () => {
         <button
           type='button'
           onClick={() => signIn('auth0')}
-          className='rounded-md border border-solid border-slate-900 bg-slate-600 p-2 text-base text-zinc-50 hover:bg-slate-300 hover:text-zinc-700'
-        >
+          className='rounded-md border border-solid border-slate-900 bg-slate-600 p-2 text-base text-zinc-50 hover:bg-slate-300 hover:text-zinc-700'>
           Iniciar sesión
         </button>
       </div>
