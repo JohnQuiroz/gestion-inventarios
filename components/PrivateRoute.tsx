@@ -4,10 +4,10 @@ import React from 'react';
 
 interface PrivateRouteProps {
   children: JSX.Element | JSX.Element[];
-  role: string;
+  role?: string;
 }
 
-const PrivateRoute = ({ children, role: allowedRoles }: PrivateRouteProps) => {
+const PrivateRoute = ({ children, role }: PrivateRouteProps) => {
   const router = useRouter();
   const { role: userRole, loadingUserData } = useUserData();
   const { status, session } = useUserData();
@@ -31,24 +31,26 @@ const PrivateRoute = ({ children, role: allowedRoles }: PrivateRouteProps) => {
     );
   }
 
-  if (allowedRoles === 'ADMIN && USER' || userRole === allowedRoles)
-    return <>{children}</>;
+  if (role && userRole !== role)
+    return (
+      <div className='page-container'>
+        <h1 className='text-4xl'>
+          No tiene permiso para ingresar a esta página
+        </h1>
+        <h2 className='text-2xl'>
+          Por favor contacte con el administrador del sistema
+        </h2>
+        <button
+          type='button'
+          onClick={() => router.push('/')}
+          className='primary-button'
+        >
+          Volver al inicio
+        </button>
+      </div>
+    );
 
-  return (
-    <div className='page-container'>
-      <h1 className='text-4xl'>No tiene permiso para ingresar a esta página</h1>
-      <h2 className='text-2xl'>
-        Por favor contacte con el administrador del sistema
-      </h2>
-      <button
-        type='button'
-        onClick={() => router.push('/')}
-        className='primary-button'
-      >
-        Volver al inicio
-      </button>
-    </div>
-  );
+  return <>{children}</>;
 };
 
 export { PrivateRoute };
