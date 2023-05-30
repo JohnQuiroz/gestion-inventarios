@@ -1,8 +1,9 @@
-import Login from '@/components/Login';
+import { Login } from '@/components/Login';
 
-const Home = () => 
-    <main className='flex flex-row h-screen'>
-      <Login />
-    </main>
+const Home = () => (
+  <main className='flex h-screen flex-row'>
+    <Login />
+  </main>
+);
 
 export default Home;

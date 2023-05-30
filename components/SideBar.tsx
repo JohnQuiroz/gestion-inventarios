@@ -1,45 +1,63 @@
 import React from 'react';
-import PrivateComponent from './PrivateComponent';
+import { PrivateComponent } from './PrivateComponent';
 import { signOut } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { useUserData } from '@/hooks/useUserData';
 
-const SideBar = () => (
-  <aside className='flex h-full w-64 flex-col gap-y-28 bg-gray-500 pt-20'>
-    <div className='flex flex-col items-center justify-center gap-y-2'>
-      <div className=''>
-        <img
-          src='https://i.imgur.com/7IhjZrO.png'
-          alt='imagen de usuario'
-          className='h-20 w-20 rounded-full'
-        />
+const SideBar = () => {
+  const { session } = useUserData();
+  return (
+    <aside>
+      <div className='user-container'>
+        <div>
+          <img
+            src={session?.user?.image || '/default.webp'}
+            alt='imagen de usuario'
+            className='h-20 w-20 rounded-full'
+          />
+        </div>
+        <div>
+          <h3 className='text-sm text-zinc-50'>
+            <span>{session?.user?.name}</span>
+          </h3>
+        </div>
       </div>
-      <div className='flex items-center justify-center'>
-        <h3 className='text-sm text-zinc-50'>
-          <span>Nombre de usuario</span>
-        </h3>
+      <div className='navigation-container'>
+        <SidebarLink href='/inventories' text='Inventarios' />
+        <SidebarLink href='/materials' text='Materiales' />
+        <PrivateComponent role='ADMIN'>
+          <SidebarLink href='/users' text='Usuarios' />
+        </PrivateComponent>
       </div>
-    </div>
-    <div className='flex h-full flex-col gap-y-3 px-4'>
-      <button className='rounded-md border border-slate-900 bg-slate-600 p-2 text-base text-zinc-50 hover:bg-slate-300 hover:text-zinc-700'>
-        Inventarios
-      </button>
-      <button className='rounded-md border border-slate-900 bg-slate-600 p-2 text-base text-zinc-50 hover:bg-slate-300 hover:text-zinc-700'>
-        Materiales
-      </button>
-      <PrivateComponent role='ADMIN'>
-        <button className='rounded-md border border-slate-900 bg-slate-600 p-2 text-base text-zinc-50 hover:bg-slate-300 hover:text-zinc-700'>
-          Usuarios
+      <div className='logout-container'>
+        <button
+          type='button'
+          onClick={() => signOut({ callbackUrl: '/' })}
+          className='secondary-button'
+        >
+          Cerrar sesión
         </button>
-      </PrivateComponent>
-    </div>
-    <div className='flex h-full flex-col justify-center gap-y-3 px-4'>
-      <button
-        type='button'
-        onClick={() => signOut({ callbackUrl: '/' })}
-        className='rounded-md border border-slate-900 hover:bg-slate-600 p-2 text-base hover:text-zinc-50 bg-slate-300 text-zinc-700'>
-        Cerrar sesión
-      </button>
-    </div>
-  </aside>
-);
+      </div>
+    </aside>
+  );
+};
+
+interface SidebarLinkProps {
+  href: string;
+  text: string;
+}
+
+const SidebarLink = ({ href, text }: SidebarLinkProps) => {
+  const router = useRouter();
+
+  const isActive = router.pathname === href;
+
+  return (
+    <Link href={href} className={isActive ? 'active-button' : 'primary-button'}>
+      <span>{text}</span>
+    </Link>
+  );
+};
 
 export { SideBar };

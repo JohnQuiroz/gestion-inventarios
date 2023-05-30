@@ -10,7 +10,6 @@ const typeDefs = gql`
 
     type User {
         id: ID!
-        document: String
         name: String
         email: String
         emailVerified: DateTime
@@ -51,17 +50,18 @@ const typeDefs = gql`
     type Query {
         users: [User]
         user(email: String!): User
+        roles: [Role]
         materials: [Material]
-        material(id: String!): Material
-        movements: [Movement]
-        movement(id: String!): Movement
+        materialNames: [Material]
+        materialBalance(id: String!): Material
+        movements(materialId: String!): [Movement]
     }
 
     type Mutation {
-        updateUser(id: String!, updatedAt: String, role: String!): User
-        createMaterial(id: String, name: String!, balance: Int, createdAt: String, userId: String!): Material
-        updateMaterial(id: String!, name: String!, balance: Int!, createdAt: String, userId: String!): Material
-        createMovement(id: String, createdAt: String, userId: String!, materialId: Int!, entry: Int, out: Int): Movement
+        updateUser(id: String!, role: String!): User
+        createMaterial(name: String!): Material
+        updateMaterial(id: String!, balance: Int!): Material
+        createMovement(materialId: String!, entry: Int, out: Int): Movement
     }
 `;
 

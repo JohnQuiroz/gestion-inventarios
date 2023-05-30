@@ -1,13 +1,16 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 const GET_USERS = gql`
   query Users {
     users {
-        createdAt
-        email
+      createdAt
+      email
+      id
+      name
+      role {
         id
         name
-        role
+      }
     }
   }
 `;
@@ -15,14 +18,27 @@ const GET_USERS = gql`
 const GET_USER = gql`
   query User($email: String!) {
     user(email: $email) {
+      name
+      email
+      id
+      role {
         name
-        email
-        id
-        role{
-          name
-        }
+      }
     }
   }
 `;
 
-export { GET_USERS, GET_USER };
+const UPDATE_USER = gql`
+  mutation UpdateUser($id: String!, $role: String!) {
+    updateUser(id: $id, role: $role) {
+      id
+      name
+      role {
+        name
+      }
+      updatedAt
+    }
+  }
+`;
+
+export { GET_USERS, GET_USER, UPDATE_USER };
