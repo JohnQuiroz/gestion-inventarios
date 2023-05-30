@@ -6,7 +6,7 @@ import { Layout } from '@/layouts/Layout';
 import React from 'react';
 
 const materials = () => (
-  <PrivateRoute role='ADMIN && USER'>
+  <PrivateRoute>
     <ModalContextProvider>
       <Layout>
         <SideBar />

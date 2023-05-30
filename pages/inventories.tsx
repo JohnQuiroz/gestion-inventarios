@@ -6,7 +6,7 @@ import { Layout } from '@/layouts/Layout';
 import React from 'react';
 
 const inventories = () => (
-  <PrivateRoute role='ADMIN && USER'>
+  <PrivateRoute>
     <ModalContextProvider>
       <Layout>
         <SideBar />
