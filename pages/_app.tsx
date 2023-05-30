@@ -1,7 +1,7 @@
 import '@/styles/globals.css';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import type { AppProps } from 'next/app';
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider } from 'next-auth/react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -16,7 +16,8 @@ const App = ({ Component, pageProps: { ...pageProps } }: AppProps) => {
         <Component {...pageProps} />
         <ToastContainer />
       </ApolloProvider>
-    </SessionProvider>)
-}
+    </SessionProvider>
+  );
+};
 
 export default App;

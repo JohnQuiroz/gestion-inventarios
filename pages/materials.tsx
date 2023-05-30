@@ -1,8 +1,8 @@
 import { Materials } from '@/components/Materials';
-import PrivateRoute from '@/components/PrivateRoute';
+import { PrivateRoute } from '@/components/PrivateRoute';
 import { SideBar } from '@/components/SideBar';
 import { ModalContextProvider } from '@/context/modalContext';
-import Layout from '@/layouts/Layout';
+import { Layout } from '@/layouts/Layout';
 import React from 'react';
 
 const materials = () => (

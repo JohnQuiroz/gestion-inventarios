@@ -13,20 +13,19 @@ const Login = () => {
   }
 
   return (
-    <div className='flex h-screen w-full flex-col items-center justify-center gap-y-12'>
-      <div className='flex w-full flex-col items-center justify-center gap-y-20'>
+    <div className='page-container'>
+      <div>
         <h1 className='text-5xl'>Sistema de Gestión de Inventarios</h1>
       </div>
-      <div className='flex w-full flex-col items-center justify-center gap-y-5'>
-        <span className='flex w-full flex-row justify-center'>
-          Por favor inicie sesión para continuar.
-        </span>
+      <div>
+        <span>Por favor inicie sesión para continuar.</span>
       </div>
-      <div className='flex items-center justify-center'>
+      <div>
         <button
           type='button'
           onClick={() => signIn('auth0')}
-          className='rounded-md border border-solid border-slate-900 bg-slate-600 p-2 text-base text-zinc-50 hover:bg-slate-300 hover:text-zinc-700'>
+          className='primary-button'
+        >
           Iniciar sesión
         </button>
       </div>

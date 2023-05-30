@@ -5,7 +5,7 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
-  return <div className='flex h-screen w-full flex-row'>{children}</div>;
+  return <div className='layout'>{children}</div>;
 };
 
-export default Layout;
+export { Layout };
