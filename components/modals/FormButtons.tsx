@@ -8,7 +8,7 @@ interface FormButtonsProps {
 
 const FormButtons = ({ loading, setOpenModal }: FormButtonsProps) => (
   <div className='flex w-full justify-center gap-3'>
-    <button disabled={loading} type='submit'>
+    <button disabled={loading} type='submit' className='primary-button'>
       {loading ? (
         <ReactLoading type='spin' height={30} width={30} />
       ) : (
@@ -18,7 +18,7 @@ const FormButtons = ({ loading, setOpenModal }: FormButtonsProps) => (
     <button
       disabled={loading}
       type='button'
-      className='secondary'
+      className='secondary-button'
       onClick={() => setOpenModal(false)}
     >
       Cancelar
@@ -26,4 +26,4 @@ const FormButtons = ({ loading, setOpenModal }: FormButtonsProps) => (
   </div>
 );
 
-export default FormButtons;
+export { FormButtons };
